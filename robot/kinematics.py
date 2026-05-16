@@ -1,5 +1,4 @@
 import math
-import matplotlib.pyplot as plt
 
 class Robot:
     def __init__(self ,wheel_base: float) -> None:
@@ -13,7 +12,7 @@ class Robot:
         
     def update(self , v_l: float , v_r : float , dt : float):
         v = (v_l + v_r )/ 2
-        omega =(v_l - v_r )/ self.L
+        omega =(v_r - v_l)/ self.L
         self.x += v * math.cos(self.theta) * dt
         self.y += v * math.sin(self.theta) * dt
         self.theta += omega *dt
@@ -25,5 +24,21 @@ class Robot:
         self.theta = math.atan2(math.sin(self.theta), math.cos(self.theta))
         
     def plot(self):
-        pass
+        import matplotlib.pyplot as plt
+        plt.style.use("default")
+        plt.figure()
+        plt.plot(self.x_pos, self.y_pos , label="Path")
+        plt.scatter(self.x_pos[0], self.y_pos[0], label="Start")
+        plt.scatter(self.x_pos[-1], self.y_pos[-1], label="End")
+
+        plt.title("Differential Drive Robot Trajectory")
+        plt.xlabel("X position (m)")
+        plt.ylabel("Y position (m)")
+        plt.axis("equal")
+        plt.grid()
+        plt.legend()
+        plt.show()
+        
+        
+
         
